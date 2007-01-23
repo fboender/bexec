@@ -1,0 +1,175 @@
+*bexec.txt*      Buffer execute and grab output      Last Change: 21 Jan 2007
+
+Buffer Execute                                       *buffer-execute* *bexec*
+
+The Bexec plugin will automatically execute the current buffer if it contains
+a script with a shebang (#!/path/to/interpreter) on the first line. The
+output of the script will be grabbed and displayed in a separate buffer.
+
+|bexec-usage|       Usage
+|bexec-install|     Installation
+|bexec-settings|    Settings
+|bexec-tips|        Tips
+
+This plugin is only available if 'compatible' is not set.
+
+=============================================================================
+USAGE                                                           *bexec-usage*
+
+To execute the script in the current buffer, use: >
+ :Bexec  or <F5> (if that wasn't mapped already)
+To execute the currently highlighted text using the current buffer's shebang,
+use: >
+ :BexecVisual or press <F5> (if that wasn't mapped already) in visual mode.
+
+The script in the current buffer will be executed if it has a shebang
+(#!/path/to/interpreter) on the first line. If the type of the file is known
+by Bexec, it will try to run a default interpreter for the script. 
+
+If the script is not yet saved, or if you are trying to execute only a
+visually selected piece of script, Bexec will save the buffer or selection to
+a temporary file and execute it from there.
+
+Bexec will grab the scripts output and put it in a seperate buffer. If the
+output buffer doesn't exist yet, Bexec will create one for you. If a window
+displaying the buffer is not yet open, Bexec will split the current window
+and set it to display the output buffer. 
+
+=============================================================================
+INSTALLATION                                                  *bexec-install*
+
+To install this script for your own use:
+
+Copy bexec.vim to the plugin/ directory in your Vim settings directory,
+usually a .vim/ directory in your homedirectory. I.e. >
+
+    cp bexec.vim /home/todsah/.vim/plugin/
+
+Copy bexec.txt to the doc/ directory in your Vim settings directory, usually
+a .vim/ directory in your homedirectory. I.e. >
+
+    cp bexec.txt /home/todsah/.vim/doc/
+
+In vim, execute the following command: >
+
+    :helptags /home/todsah/.vim/doc/
+  
+You can now pull up the Bexec help using >
+    
+    :help bexec
+
+=============================================================================
+SETTINGS                                                     *bexec-settings*
+
+Bexec's behaviour can be customized using a number of settings. You can change
+these settings using the :let command: >
+
+  let settingname=value
+
+Bexec offers the following settings:
+
+                                                              *g:bexec_args*
+To pass arguments to the script you're executing: >
+  
+  let bexec_args="arg1 arg2 'arg 3'"
+
+You can also redirect input if you wish: >
+
+  let bexec_args="-sort < mybooks.txt"
+
+                                                           *g:bexec_argsbuf*
+To have Bexec read the argument from an open buffer, put the arguments on the
+first line of the buffer and:
+
+  let bexec_argsbuf=[buffer number]
+
+                                                          *g:bexec_splitdir*
+To control the way Bexec splits the current window to create the output
+window, you can modify the bexec_splitdir setting: >
+
+  let bexec_splitdir=[direction]
+
+[direction] can be "hor" for horizontal or "ver" for vertical splitting.
+The default is horizontal splitting.
+
+                                                        *g:bexec_outputmode*
+To control what Bexec does with the output of a script: >
+
+  let bexec_outputmode=[outputmode]
+
+[outputmode] can be "replace" (default) to clear the output buffer before
+each script execution. Use a value of "append" to append the output of the
+script to the output buffer. Bexec will insert a separator line between
+outputs.
+
+
+                                                       *g:bexec_rehighlight*
+If you want Bexec to re-highlight a visual selection after calling :BexecVisual, set the following option to 1: >
+
+  let bexec_rehighlight=1
+
+To change the way Bexec scrolls the output buffer window after execution:
+
+  let bexec_outputscroll=[1|0]
+
+Turning this option on ('1') (default) will make Bexec scroll the output list
+to the bottom of the output. If the option is off, Bexec will scroll the top
+of the output to the top of the window.
+
+=============================================================================
+TIPS                                                             *bexec-tips*
+
+You can use Bexec as a crude database front-end! Create an shell script that
+runs SQL commands from a file using a commandline client. For instance, for
+MySQL: >
+
+  #!/bin/sh
+
+  USERNAME='john'
+  PASSWORD='secret'
+  HOSTNAME='localhost'
+  DATABASE='cms'
+
+  mysql -t -u$USERNAME -p$PASSWORD -h$HOSTNAME $DATABASE < $1
+
+Then, edit a file with a .sql extension (so you get syntax highlighting). For
+example: >
+
+  #!/home/todsah/mysql_exec.sh
+
+  SELECT id, page_name FROM pages WHERE page_name LIKE 'Test%';
+
+It will output something like:
+
+  +----+-----------+
+  | id | page_name |
+  +----+-----------+
+  |  1 | Test      | 
+  +----+-----------+
+  |  2 | Testing   | 
+  +----+-----------+
+
+It's not much better than a normal commandline database frontend, but at least
+you get:
+
+ * SQL syntax color highlighting
+ * Easier editing than most database commandline clients.  
+ * Execution of a couple of lines of the script (Use visual mode select and
+   BexecVisual)
+ * Split screen SQL editing and execution.
+
+Here's one for Sqlite3: >
+
+  #!/bin/sh
+  
+  DBFILE="/var/www/dev/data/database"
+  
+  grep -v "^#" $1 | sqlite3 -header -column $DBFILE 
+
+Output looks like:
+
+  hostname             username    username    fullname     
+  -------------------  ----------  ----------  -------------
+  localhost.localhost  todsah      todsah      Ferry Boender
+  localhost.localhost  todsah      todsah      Ferry Boender
+
