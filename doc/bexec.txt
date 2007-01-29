@@ -2,9 +2,10 @@
 
 Buffer Execute (v0.1)                                *buffer-execute* *bexec*
 
-The Bexec plugin will automatically execute the current buffer if it contains
-a script with a shebang (#!/path/to/interpreter) on the first line. The
-output of the script will be grabbed and displayed in a separate buffer.
+The Bexec plugin allows the user to execute the current buffer if it contains a
+script with a shebang (#!/path/to/interpreter) on the first line. The output of
+the script will be grabbed and displayed in a separate buffer. It can be used
+to execute, for instance, PHP, PERL, Python or SQL scripts from within Vim.
 
 |bexec-usage|       Usage
 |bexec-install|     Installation
@@ -43,22 +44,11 @@ and set it to display the output buffer.
 =============================================================================
 INSTALLATION                                                  *bexec-install*
 
-To install this script for your own use:
+Bexec is distributed as a 'Vimball'. To install it, just edit the
+bexec-vX.Y.vba script in Vim and run the following command: >
 
-Copy bexec.vim to the plugin/ directory in your Vim settings directory,
-usually a .vim/ directory in your homedirectory. E.g. >
+    :so %
 
-    cp bexec.vim /home/todsah/.vim/plugin/
-
-Copy bexec.txt to the doc/ directory in your Vim settings directory, usually
-a .vim/ directory in your homedirectory. E.g.. >
-
-    cp bexec.txt /home/todsah/.vim/doc/
-
-In vim, execute the following command: >
-
-    :helptags /home/todsah/.vim/doc/
-  
 You can now pull up the Bexec help using >
     
     :help bexec
@@ -127,7 +117,7 @@ TIPS                                                             *bexec-tips*
 
 You can use Bexec as a crude database front-end! Create an shell script that
 runs SQL commands from a file using a commandline client. For instance, for
-MySQL: >
+MySQL: /home/todsah/mysql_exec.sh >
 
   #!/bin/sh
 
@@ -160,8 +150,8 @@ you get:
 
  * SQL syntax color highlighting
  * Easier editing than most database commandline clients.  
- * Execution of a couple of lines of the script (Use visual mode select and
-   BexecVisual)
+ * Execution of a just couple of lines of the script (Use visual mode select
+   and BexecVisual)
  * Split screen SQL editing and execution.
 
 Here's one for Sqlite3: >
