@@ -4,6 +4,7 @@
 " capture its output and put it in a seperate buffer.
 "
 " Last Change:	2007 Jan 29
+" Version:      v0.1
 " Maintainer:	Ferry Boender <f DOT boender AT electricmonk DOT nl>
 " License:	    This file is placed in the public domain.
 " Usage:        To use this script:
