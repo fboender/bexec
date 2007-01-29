@@ -3,7 +3,7 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:	2007 Jan 21
+" Last Change:	2007 Jan 29
 " Maintainer:	Ferry Boender <f DOT boender AT electricmonk DOT nl>
 " License:	    This file is placed in the public domain.
 " Usage:        To use this script:
@@ -33,7 +33,8 @@
 "               * Allow feeding into STDIN.
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
-" Changelog:    v0.1 (Jan 16, 2007)
+"               * Fix FIXME's.
+" Changelog:    v0.1 (Jan 27, 2007)
 "                 * Initial version.
 "                 * Removed setlocal bufhidden=delete so buffer settings don't
 "                   get undone. This fixes the bug where vim asks to save the
@@ -52,10 +53,10 @@
 "                 * Parameters to the shebang interpreter are now ignored in
 "                   the executable() check.
 
-"if exists("loaded_bexec")
-"  finish
-"endif
-"let loaded_bexec = 1
+if exists("loaded_bexec")
+  finish
+endif
+let loaded_bexec = 1
 
 "
 " Define some mappings to BExec

@@ -17,10 +17,15 @@ This plugin is only available if 'compatible' is not set.
 USAGE                                                           *bexec-usage*
 
 To execute the script in the current buffer, use: >
- :Bexec  or <F5> (if that wasn't mapped already)
+ :Bexec
 To execute the currently highlighted text using the current buffer's shebang,
 use: >
- :BexecVisual or press <F5> (if that wasn't mapped already) in visual mode.
+ :BexecVisual
+
+If the F5 key (yuck! Visual Foo convention :-) ) wasn't mapped yet, it will be
+mapped to :Bexec (in normal mode) and :BexecVisual in visual mode. So all you
+have to do to execute the script in the current buffer is (visually select some
+text and) hit F5.
 
 The script in the current buffer will be executed if it has a shebang
 (#!/path/to/interpreter) on the first line. If the type of the file is known
@@ -41,12 +46,12 @@ INSTALLATION                                                  *bexec-install*
 To install this script for your own use:
 
 Copy bexec.vim to the plugin/ directory in your Vim settings directory,
-usually a .vim/ directory in your homedirectory. I.e. >
+usually a .vim/ directory in your homedirectory. E.g. >
 
     cp bexec.vim /home/todsah/.vim/plugin/
 
 Copy bexec.txt to the doc/ directory in your Vim settings directory, usually
-a .vim/ directory in your homedirectory. I.e. >
+a .vim/ directory in your homedirectory. E.g.. >
 
     cp bexec.txt /home/todsah/.vim/doc/
 
@@ -64,30 +69,30 @@ SETTINGS                                                     *bexec-settings*
 Bexec's behaviour can be customized using a number of settings. You can change
 these settings using the :let command: >
 
-  let settingname=value
+  :let settingname=value
 
 Bexec offers the following settings:
 
                                                               *g:bexec_args*
 To pass arguments to the script you're executing: >
   
-  let bexec_args="arg1 arg2 'arg 3'"
+  :let bexec_args="arg1 arg2 'arg 3'"
 
 You can also redirect input if you wish: >
 
-  let bexec_args="-sort < mybooks.txt"
+  :let bexec_args="-sort < mybooks.txt"
 
                                                            *g:bexec_argsbuf*
 To have Bexec read the argument from an open buffer, put the arguments on the
 first line of the buffer and:
 
-  let bexec_argsbuf=[buffer number]
+  :let bexec_argsbuf=[buffer number]
 
                                                           *g:bexec_splitdir*
 To control the way Bexec splits the current window to create the output
 window, you can modify the bexec_splitdir setting: >
 
-  let bexec_splitdir=[direction]
+  :let bexec_splitdir=[direction]
 
 [direction] can be "hor" for horizontal or "ver" for vertical splitting.
 The default is horizontal splitting.
@@ -95,7 +100,7 @@ The default is horizontal splitting.
                                                         *g:bexec_outputmode*
 To control what Bexec does with the output of a script: >
 
-  let bexec_outputmode=[outputmode]
+  :let bexec_outputmode=[outputmode]
 
 [outputmode] can be "replace" (default) to clear the output buffer before
 each script execution. Use a value of "append" to append the output of the
@@ -104,13 +109,14 @@ outputs.
 
 
                                                        *g:bexec_rehighlight*
-If you want Bexec to re-highlight a visual selection after calling :BexecVisual, set the following option to 1: >
+If you want Bexec to re-highlight a visual selection after calling
+:BexecVisual, set the following option to 1: >
 
-  let bexec_rehighlight=1
+  :let bexec_rehighlight=[1|0]
 
 To change the way Bexec scrolls the output buffer window after execution:
 
-  let bexec_outputscroll=[1|0]
+  :let bexec_outputscroll=[1|0]
 
 Turning this option on ('1') (default) will make Bexec scroll the output list
 to the bottom of the output. If the option is off, Bexec will scroll the top
