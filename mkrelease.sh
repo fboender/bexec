@@ -11,7 +11,7 @@ fi
 
 # Unix (src) release
 vim -s ./release.vim
-mv bexec.vba bexec-$1.vba
+mv bexec.vba bexec-v$1.vba
 
 # Cleanup.
 
