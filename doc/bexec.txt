@@ -1,11 +1,12 @@
-*bexec.txt*      Buffer execute and grab output      Last Change: 21 Jan 2007
+*bexec.txt*      Buffer execute and grab output      Last Change: 27 Jan 2007
 
 Buffer Execute (v0.1)                                *buffer-execute* *bexec*
 
-The Bexec plugin allows the user to execute the current buffer if it contains a
-script with a shebang (#!/path/to/interpreter) on the first line. The output of
-the script will be grabbed and displayed in a separate buffer. It can be used
-to execute, for instance, PHP, PERL, Python or SQL scripts from within Vim.
+The Bexec plugin allows the user to execute the current buffer if it
+contains a script with a shebang (#!/path/to/interpreter) on the first line.
+The output of the script will be grabbed and displayed in a separate buffer.
+It can be used to execute, for instance, Shell, PHP, PERL, Python or SQL
+scripts from within Vim.
 
 |bexec-usage|       Usage
 |bexec-install|     Installation
@@ -19,22 +20,22 @@ USAGE                                                           *bexec-usage*
 
 To execute the script in the current buffer, use: >
  :Bexec
-To execute the currently highlighted text using the current buffer's shebang,
-use: >
+To execute the currently highlighted text using the current buffer's
+shebang, use: >
  :BexecVisual
 
-If the F5 key (yuck! Visual Foo convention :-) ) wasn't mapped yet, it will be
-mapped to :Bexec (in normal mode) and :BexecVisual in visual mode. So all you
-have to do to execute the script in the current buffer is (visually select some
-text and) hit F5.
+If the <F5> key (yuck! Visual Foo convention :-) ) wasn't mapped yet, it will
+be mapped to :Bexec in normal mode, and :BexecVisual in visual mode. So all
+you have to do to execute the script in the current buffer is (visually
+select some text and) hit <F5>.
 
 The script in the current buffer will be executed if it has a shebang
 (#!/path/to/interpreter) on the first line. If the type of the file is known
 by Bexec, it will try to run a default interpreter for the script. 
 
 If the script is not yet saved, or if you are trying to execute only a
-visually selected piece of script, Bexec will save the buffer or selection to
-a temporary file and execute it from there.
+visually selected piece of script, Bexec will save the buffer or selection
+to a temporary file and execute it from there.
 
 Bexec will grab the scripts output and put it in a seperate buffer. If the
 output buffer doesn't exist yet, Bexec will create one for you. If a window
@@ -44,7 +45,7 @@ and set it to display the output buffer.
 =============================================================================
 INSTALLATION                                                  *bexec-install*
 
-Bexec is distributed as a 'Vimball'. To install it, just edit the
+Bexec is distributed as a |Vimball|. To install it, just edit the
 bexec-vX.Y.vba script in Vim and run the following command: >
 
     :so %
@@ -56,8 +57,8 @@ You can now pull up the Bexec help using >
 =============================================================================
 SETTINGS                                                     *bexec-settings*
 
-Bexec's behaviour can be customized using a number of settings. You can change
-these settings using the :let command: >
+Bexec's behaviour can be customized using a number of settings. You can
+change these settings using the |let| command: >
 
   :let settingname=value
 
@@ -74,7 +75,7 @@ You can also redirect input if you wish: >
 
                                                            *g:bexec_argsbuf*
 To have Bexec read the argument from an open buffer, put the arguments on the
-first line of the buffer and:
+first line of the buffer and: >
 
   :let bexec_argsbuf=[buffer number]
 
@@ -104,13 +105,14 @@ If you want Bexec to re-highlight a visual selection after calling
 
   :let bexec_rehighlight=[1|0]
 
+                                                      *g:bexec_outputscroll*
 To change the way Bexec scrolls the output buffer window after execution:
 
   :let bexec_outputscroll=[1|0]
 
-Turning this option on ('1') (default) will make Bexec scroll the output list
-to the bottom of the output. If the option is off, Bexec will scroll the top
-of the output to the top of the window.
+Turning this option on ('1') (default) will make Bexec scroll the output
+list to the bottom of the output. If the option is off, Bexec will scroll
+the top of the output to the top of the window.
 
 =============================================================================
 TIPS                                                             *bexec-tips*
@@ -128,8 +130,8 @@ MySQL: /home/todsah/mysql_exec.sh >
 
   mysql -t -u$USERNAME -p$PASSWORD -h$HOSTNAME $DATABASE < $1
 
-Then, edit a file with a .sql extension (so you get syntax highlighting). For
-example: >
+Then, edit a file with a .sql extension (so you get syntax highlighting).
+For example: >
 
   #!/home/todsah/mysql_exec.sh
 
