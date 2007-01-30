@@ -1,6 +1,6 @@
-*bexec.txt*      Buffer execute and grab output      Last Change: 27 Jan 2007
+*bexec.txt*      Buffer execute and grab output      Last Change: 30 Jan 2007
 
-Buffer Execute (v0.1)                                *buffer-execute* *bexec*
+Buffer Execute (v0.2)                                *buffer-execute* *bexec*
 
 The Bexec plugin allows the user to execute the current buffer if it
 contains a script with a shebang (#!/path/to/interpreter) on the first line.
@@ -8,10 +8,12 @@ The output of the script will be grabbed and displayed in a separate buffer.
 It can be used to execute, for instance, Shell, PHP, PERL, Python or SQL
 scripts from within Vim.
 
-|bexec-usage|       Usage
-|bexec-install|     Installation
-|bexec-settings|    Settings
-|bexec-tips|        Tips
+|bexec-usage|         Usage
+|bexec-install|       Installation
+|bexec-settings|      Settings
+|bexec-customizing|   Customizing
+|bexec-tips|          Tips
+|bexec-misc|          Various things
 
 This plugin is only available if 'compatible' is not set.
 
@@ -19,19 +21,19 @@ This plugin is only available if 'compatible' is not set.
 USAGE                                                           *bexec-usage*
 
 To execute the script in the current buffer, use: >
- :Bexec
+ \bx   or   :Bexec
 To execute the currently highlighted text using the current buffer's
 shebang, use: >
- :BexecVisual
+ \bx   or   :BexecVisual
 
-If the <F5> key (yuck! Visual Foo convention :-) ) wasn't mapped yet, it will
-be mapped to :Bexec in normal mode, and :BexecVisual in visual mode. So all
-you have to do to execute the script in the current buffer is (visually
-select some text and) hit <F5>.
+Note: If you've changed your 'mapleader' variable, you'll have to use that 
+instead if '\'. 
 
 The script in the current buffer will be executed if it has a shebang
 (#!/path/to/interpreter) on the first line. If the type of the file is known
-by Bexec, it will try to run a default interpreter for the script. 
+by Bexec, it will try to run a default interpreter for the script. Custom
+filters can be defined in the bexec.vim file to avoid having to write a
+shell script wrapper for certain tasks. See |bexec-customizing|.
 
 If the script is not yet saved, or if you are trying to execute only a
 visually selected piece of script, Bexec will save the buffer or selection
@@ -41,6 +43,12 @@ Bexec will grab the scripts output and put it in a seperate buffer. If the
 output buffer doesn't exist yet, Bexec will create one for you. If a window
 displaying the buffer is not yet open, Bexec will split the current window
 and set it to display the output buffer. 
+
+If you want to map the :Bexec calls to another key, let's say <F5>, put
+something like this in your ~/.vimrc: >
+
+    nmap <silent> <unique> <F5> :call Bexec()<CR>
+    vmap <silent> <unique> <F5> :call BexecVisual()<CR>
 
 =============================================================================
 INSTALLATION                                                  *bexec-install*
@@ -115,6 +123,38 @@ list to the bottom of the output. If the option is off, Bexec will scroll
 the top of the output to the top of the window.
 
 =============================================================================
+CUSTOMIZING                                               *bexec-customizing*
+
+Aside from the settings, there are a couple of things you can do to customize
+Bexec. If the current file you're editing doesn't have a shebang, or if the
+interpreter for the filetype doesn't understand a shebang, you can do one of
+three things:
+
+1. Write a shell script wrapper that'll execute the script for you. For some
+   examples, see the |bexec-tips| section. Then put that as the path to your
+   interpreter in the shebang.
+
+2. Add the interpreter to the list of interpreters Bexec knows about. You 
+   can do this from your ~/.vimrc by defining the g:bexec_script_types 
+   variable like so: >
+
+    let g:bexec_script_types = ['pike', 'tclsh']
+
+   This will add the pike and tclsh interpreter to the list of known 
+   interpreters. There is no need to give the full path to the interpreters,
+   just give the name of the executable. It has to be in your path though.
+
+3. Add a custom filter for your script type. Custom filters can be defined
+   in your ~/.vimrc by defining the g:bexec_script_types variable like so: >
+
+    let g:bexec_filter_types = {
+        \ 'html' : 'links -dump',
+        \ }
+
+   To make the Links textbrowser your default filter for files of the 
+   html type.
+     
+=============================================================================
 TIPS                                                             *bexec-tips*
 
 You can use Bexec as a crude database front-end! Create an shell script that
@@ -170,4 +210,30 @@ Output looks like:
   -------------------  ----------  ----------  -------------
   localhost.localhost  todsah      todsah      Ferry Boender
   localhost.localhost  todsah      todsah      Ferry Boender
+
+=============================================================================
+MISC                                                             *bexec-misc*
+
+Changelog
+
+    v0.2
+        
+        - Removed the <F5> keybindings. Added <leader>bx instead.
+        - Added custom filters (Patch by Alexandru Ungur).
+        - Improved 'known interpreters' configuring (Patch by Alexandru
+          Ungur).
+
+    v0.1
+        
+        Initial version
+
+Credits:
+
+    Many thanks to the following (groups of) people:
+
+        - The people of #vim on the FreeNode IRC network.
+        - Alexandru E. Ungur for various suggestions and patches. 
+        - Michiel 'Mafkees' van Baak for beta testing.
+        - Steven Looman for various suggestions.
+        - Bram Moolenaar for, well, you know.
 
