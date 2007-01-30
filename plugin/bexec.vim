@@ -3,8 +3,8 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:	2007 Jan 29
-" Version:      v0.1
+" Last Change:	2007 Jan 30
+" Version:      v0.2
 " Maintainer:	Ferry Boender <f DOT boender AT electricmonk DOT nl>
 " License:	    This file is placed in the public domain.
 " Usage:        To use this script:
@@ -15,9 +15,11 @@
 "
 "               Run :Bexec
 "                OR
+"               Type <leader>bx (usually \bx)
+"                OR
 "               Run :BexecVisual  (in visual select mode)
 "                OR
-"               Press <F5>
+"               Type <leader>bx (usually \bx) in visual mode.
 "
 "               For more usage, see bexec.txt.
 "
@@ -30,12 +32,15 @@
 "               * Add menu and toolbar
 "               * PHP Execution is hard with Visual mode.
 "               * Check if buffer has been written yet.
-"               * Allow options to the interpreter.
 "               * Allow feeding into STDIN.
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.1 (Jan 27, 2007)
+" Changelog:    v0.2 (Jan 30, 2007)
+"                 * Removed F5 mappings, <leader> bx instead.
+"                 * Better interpreter finding. (patch by Alexandru Ungur).
+"                 * Custom filters. (patch by Alexandru Ungur).
+"               v0.1 (Jan 27, 2007)
 "                 * Initial version.
 "                 * Removed setlocal bufhidden=delete so buffer settings don't
 "                   get undone. This fixes the bug where vim asks to save the
@@ -62,12 +67,8 @@ let loaded_bexec = 1
 "
 " Define some mappings to BExec
 "
-if !hasmapto('Bexec')
-    nmap <silent> <unique> <F5> :call Bexec()<CR>
-endif
-if !hasmapto('BexecVisual')
-    vmap <silent> <unique> <F5> :call BexecVisual()<CR>
-endif
+nmap <silent> <unique> <Leader>bx :call Bexec()<CR>
+vmap <silent> <unique> <Leader>bx :call BexecVisual()<CR>
 
 "
 " Let's do some settings too.
@@ -105,15 +106,33 @@ com! -nargs=* Bexec       call Bexec(<f-args>)
 com! -nargs=* BexecVisual call BexecVisual(<f-args>)
 
 "
-" List of interpreters BExec knows about.
-" FIXME: Is there a better way of doing this?
-"
+" List of interpreters/common scripting language BExec knows about.
+" 
+let s:script_types = [
+    \ 'php', 'python', 'sh', 'perl', 'ruby', 'm4',
+    \ 'pike', 'tclsh' ]
 let s:interpreters = { }
-let s:interpreters["php"]    = "/usr/bin/env php"
-let s:interpreters["python"] = "/usr/bin/env python"
-let s:interpreters["sh"]     = "/usr/bin/env sh"
-let s:interpreters["perl"]   = "/usr/bin/env perl"
+for n in s:script_types
+    let s:interpreters[n] = "/usr/bin/env " . n
+endfor
+" Add user's custom interpreters.
+for n in g:bexec_script_types
+    let s:interpreters[n] = "/usr/bin/env " . n
+endfor
 
+" Custom 'filters', 
+" e.g. you can run html pages through lynx, sql files through MySQL, etc.
+let s:filter_types = { 
+            \ 'html' : 'lynx --dump', 
+            \ 'sql'  : 'mysql -u root <',
+            \ }
+for k in keys(s:filter_types)
+    let s:interpreters[k] = s:filter_types[k]
+endfor
+" Overwrite user's custom filters.
+for k in keys(g:bexec_filter_types)
+    let s:interpreters[k] = g:bexec_filter_types[k]
+endfor
 "
 " Get the first line of the current buffer and check if it's a shebang line
 " (shebang is an indication of which interpreter should be used to run a
