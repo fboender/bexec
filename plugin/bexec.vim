@@ -116,9 +116,11 @@ for n in s:script_types
     let s:interpreters[n] = "/usr/bin/env " . n
 endfor
 " Add user's custom interpreters.
-for n in g:bexec_script_types
-    let s:interpreters[n] = "/usr/bin/env " . n
-endfor
+if exists("bexec_script_types")
+    for n in g:bexec_script_types
+        let s:interpreters[n] = "/usr/bin/env " . n
+    endfor
+endif
 
 " Custom 'filters', 
 " e.g. you can run html pages through lynx, sql files through MySQL, etc.
@@ -130,9 +132,12 @@ for k in keys(s:filter_types)
     let s:interpreters[k] = s:filter_types[k]
 endfor
 " Overwrite user's custom filters.
-for k in keys(g:bexec_filter_types)
-    let s:interpreters[k] = g:bexec_filter_types[k]
-endfor
+if exists("bexec_filter_types")
+    for k in keys(g:bexec_filter_types)
+        let s:interpreters[k] = bexec_filter_types[k]
+    endfor
+endif
+
 "
 " Get the first line of the current buffer and check if it's a shebang line
 " (shebang is an indication of which interpreter should be used to run a

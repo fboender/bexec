@@ -125,10 +125,11 @@ the top of the output to the top of the window.
 =============================================================================
 CUSTOMIZING                                               *bexec-customizing*
 
-Aside from the settings, there are a couple of things you can do to customize
-Bexec. If the current file you're editing doesn't have a shebang, or if the
-interpreter for the filetype doesn't understand a shebang, you can do one of
-three things:
+Aside from the settings, there are a couple of things you can do to
+customize Bexec. If the current file you're editing doesn't have a shebang,
+or if the interpreter for the filetype doesn't understand a shebang (or
+there isn't even a default interpreter, such as for SQL files), you can do
+one of three things:
 
 1. Write a shell script wrapper that'll execute the script for you. For some
    examples, see the |bexec-tips| section. Then put that as the path to your
@@ -151,8 +152,8 @@ three things:
         \ 'html' : 'links -dump',
         \ }
 
-   To make the Links textbrowser your default filter for files of the 
-   html type.
+   To make the Links textbrowser your default filter for files of the html
+   type. (Note: links doesn't work for executing Visually selected text)
      
 =============================================================================
 TIPS                                                             *bexec-tips*
