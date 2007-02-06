@@ -272,9 +272,10 @@ Credits:
 
     Many thanks to the following (groups of) people:
 
-        - The people of #vim on the FreeNode IRC network.
+        - The people of #vim on the FreeNode IRC network for script help.
         - Alexandru E. Ungur for various suggestions and patches. 
         - Michiel 'Mafkees' van Baak for beta testing.
         - Steven Looman for various suggestions.
+        - Uwe GeldWaescher for feedback and suggestions.
         - Bram Moolenaar for, well, you know.
 

@@ -3,8 +3,8 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:	2007 Jan 30
-" Version:      v0.2
+" Last Change:	2007 Feb 06
+" Version:      v0.3
 " Maintainer:	Ferry Boender <f DOT boender AT electricmonk DOT nl>
 " License:	    This file is placed in the public domain.
 " Usage:        To use this script:
@@ -28,15 +28,24 @@
 " Todo:         * Settings:
 "                   - Change to the buffer's dir and run. (default: curdir)
 "                   - 'Auto' save so you don't have to save beforehand. (default:off)
+"               * Make bexec buffer-aware. 
+"                   - Multiple scripts/outputs open at the same time.
+"                   - Interpreter per buffer.
+"               * If filename is known but buffer hasn't been saved yet, Bexec
+"                 produces an error.
 "               * Add menu entry
 "               * Add menu and toolbar
 "               * PHP Execution is hard with Visual mode.
 "               * Check if buffer has been written yet.
-"               * Allow feeding into STDIN.
+"               * Allow feeding of buffer contents into STDIN.
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.2 (Jan 30, 2007)
+" Changelog:    v0.3 (Feb 6, 2007)
+"                 * BexecCloseOut() added to close the output window (\bc)
+"                 * bexec_interpreter setting added.
+"                 * Small code cleanups.
+"               v0.2 (Jan 30, 2007)
 "                 * Removed F5 mappings, <leader> bx instead.
 "                 * Better interpreter finding. (patch by Alexandru Ungur).
 "                 * Custom filters. (patch by Alexandru Ungur).
@@ -59,16 +68,23 @@
 "                 * Parameters to the shebang interpreter are now ignored in
 "                   the executable() check.
 
-if exists("loaded_bexec")
-  finish
-endif
-let loaded_bexec = 1
+"if exists("loaded_bexec")
+"  finish
+"endif
+"let loaded_bexec = 1
 
 "
 " Define some mappings to BExec
 "
-nmap <silent> <unique> <Leader>bx :call Bexec()<CR>
-vmap <silent> <unique> <Leader>bx :call BexecVisual()<CR>
+if !hasmapto("Bexec")
+    nmap <silent> <unique> <Leader>bx :call Bexec()<CR>
+endif
+if !hasmapto("BexecVisual")
+    vmap <silent> <unique> <Leader>bx :call BexecVisual()<CR>
+endif
+if !hasmapto("BexecCloseOut")
+    nmap <silent> <unique> <Leader>bc :call BexecCloseOut()<CR>
+endif
 
 "
 " Let's do some settings too.
@@ -98,12 +114,22 @@ if !exists("bexec_outputscroll")
     " Scroll output buffer after appending output of script?
     let bexec_outputscroll = 1
 endif
+if !exists("bexec_interpreter")
+    " Overwrite all interpreter detect and use this one
+    let bexec_interpreter = ""
+endif
 
 "
 " Make the BExec call known to Vim
 "
-com! -nargs=* Bexec       call Bexec(<f-args>)
-com! -nargs=* BexecVisual call BexecVisual(<f-args>)
+com! -nargs=* Bexec         call Bexec(<f-args>)
+com! -nargs=* BexecVisual   call BexecVisual(<f-args>)
+com!          BexecCloseOut call BexecCloseOut()
+
+"
+" Constants
+"
+let s:bexec_outbufname = "-BExec_output-"
 
 "
 " List of interpreters/common scripting language BExec knows about.
@@ -170,15 +196,19 @@ endfunction
 
 "
 " Get the interpreter that should be used for the current buffer. Either from
-" the shebang or by guessing it.
+" a setting (which overwrites everything), the shebang or by guessing it.
 "
 function! <SID>GetInterpreter()
-    let l:interpreter = <SID>GetInterpreterFromShebang()
-    if l:interpreter == -1
-        let l:interpreter = <SID>GetInterpreterFromFiletype()
-    endif
-    if !executable(split(l:interpreter)[0])
-        let l:interpreter = -2
+    if g:bexec_interpreter != ""
+        let l:interpreter = g:bexec_interpreter
+    else
+        let l:interpreter = <SID>GetInterpreterFromShebang()
+        if l:interpreter == -1
+            let l:interpreter = <SID>GetInterpreterFromFiletype()
+        endif
+        if !executable(split(l:interpreter)[0])
+            let l:interpreter = -2
+        endif
     endif
     return l:interpreter
 endfunction
@@ -364,10 +394,17 @@ function! <SID>BexecDo(...)
             let l:scriptFilename = <SID>GetScriptFilename()
         endif
         let l:argString = <SID>GetArgumentString(a:)
-        let l:outBuf = <SID>FindOrCreateOutWin("-BExec_output-")
+        let l:outBuf = <SID>FindOrCreateOutWin(s:bexec_outbufname)
         call <SID>RunAndRedirectOut(l:interpreter, l:scriptFilename, l:argString, l:outBuf)
     endif
     call setpos(".", l:curpos)
+endfunction
+
+"
+" Close/Delete the output window/buffer.
+"
+function! BexecCloseOut()
+    silent! exec "bdelete! ".s:bexec_outbufname
 endfunction
 
 "
