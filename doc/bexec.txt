@@ -1,6 +1,6 @@
-*bexec.txt*      Buffer execute and grab output      Last Change: 30 Jan 2007
+*bexec.txt*      Buffer execute and grab output      Last Change: 06 Feb 2007
 
-Buffer Execute (v0.2)                                *buffer-execute* *bexec*
+Buffer Execute (v0.3)                                *buffer-execute* *bexec*
 
 The Bexec plugin allows the user to execute the current buffer if it
 contains a script with a shebang (#!/path/to/interpreter) on the first line.
@@ -30,10 +30,12 @@ Note: If you've changed your 'mapleader' variable, you'll have to use that
 instead if '\'. 
 
 The script in the current buffer will be executed if it has a shebang
-(#!/path/to/interpreter) on the first line. If the type of the file is known
-by Bexec, it will try to run a default interpreter for the script. Custom
-filters can be defined in the bexec.vim file to avoid having to write a
-shell script wrapper for certain tasks. See |bexec-customizing|.
+(#!/path/to/interpreter) on the first line. Otherwise, if the type of the
+file is known by Bexec, it will try to run a default interpreter for the
+script.  Custom filters can be defined in the bexec.vim file to avoid having
+to write a shell script wrapper for certain tasks. See |bexec-customizing|.
+In the worst case, when Bexec has no clue how to execute the buffer, you can
+set the |g:bexec_interpreter| setting.
 
 If the script is not yet saved, or if you are trying to execute only a
 visually selected piece of script, Bexec will save the buffer or selection
@@ -62,6 +64,8 @@ You can now pull up the Bexec help using >
     
     :help bexec
 
+For help on mapping the functions to hotkeys, see |bexec-usage|.
+
 =============================================================================
 SETTINGS                                                     *bexec-settings*
 
@@ -72,7 +76,7 @@ change these settings using the |let| command: >
 
 Bexec offers the following settings:
 
-                                                              *g:bexec_args*
+                                                               *g:bexec_args*
 To pass arguments to the script you're executing: >
   
   :let bexec_args="arg1 arg2 'arg 3'"
@@ -80,14 +84,16 @@ To pass arguments to the script you're executing: >
 You can also redirect input if you wish: >
 
   :let bexec_args="-sort < mybooks.txt"
+<
 
-                                                           *g:bexec_argsbuf*
-To have Bexec read the argument from an open buffer, put the arguments on the
-first line of the buffer and: >
+                                                            *g:bexec_argsbuf*
+To have Bexec read the argument from an open buffer, put the arguments on
+the first line of the buffer and: >
 
   :let bexec_argsbuf=[buffer number]
+<
 
-                                                          *g:bexec_splitdir*
+                                                           *g:bexec_splitdir*
 To control the way Bexec splits the current window to create the output
 window, you can modify the bexec_splitdir setting: >
 
@@ -96,7 +102,7 @@ window, you can modify the bexec_splitdir setting: >
 [direction] can be "hor" for horizontal or "ver" for vertical splitting.
 The default is horizontal splitting.
 
-                                                        *g:bexec_outputmode*
+                                                         *g:bexec_outputmode*
 To control what Bexec does with the output of a script: >
 
   :let bexec_outputmode=[outputmode]
@@ -107,14 +113,15 @@ script to the output buffer. Bexec will insert a separator line between
 outputs.
 
 
-                                                       *g:bexec_rehighlight*
+                                                        *g:bexec_rehighlight*
 If you want Bexec to re-highlight a visual selection after calling
 :BexecVisual, set the following option to 1: >
 
   :let bexec_rehighlight=[1|0]
+<
 
-                                                      *g:bexec_outputscroll*
-To change the way Bexec scrolls the output buffer window after execution:
+                                                       *g:bexec_outputscroll*
+To change the way Bexec scrolls the output buffer window after execution: >
 
   :let bexec_outputscroll=[1|0]
 
@@ -122,6 +129,31 @@ Turning this option on ('1') (default) will make Bexec scroll the output
 list to the bottom of the output. If the option is off, Bexec will scroll
 the top of the output to the top of the window.
 
+                                                       *g:bexec_script_types*
+Bexec knows about various default interpreters. If it doesn't know about
+a certain interpreter, you can add it by setting the following: >
+
+     let bexec_script_types = ['pike', 'tclsh']
+
+Also see the |bexec-customizing| section.
+
+                                                       *g:bexec_filter_types*
+Sometimes an interpreter isn't standard. For instance, it might not be able
+to handle shebangs. You could write a shellscript wrapper, or set the
+|g:bexec_interpreter| setting, but you can also add filter types: >
+
+    let g:bexec_filter_types = {'html': 'lynx -dump'}
+
+For more information, see the |bexec-customizing| section.
+
+                                                        *g:bexec_interpreter*
+To manually set the interpreter Bexec should use, you can set: >
+
+  :let bexec_interpreter="/path/to/interpreter"
+
+This setting will override all other forms of finding a suitable interpreter
+for the current script.
+    
 =============================================================================
 CUSTOMIZING                                               *bexec-customizing*
 
@@ -136,12 +168,13 @@ one of three things:
    interpreter in the shebang.
 
 2. Add the interpreter to the list of interpreters Bexec knows about. You 
-   can do this from your ~/.vimrc by defining the g:bexec_script_types 
+   can do this from your ~/.vimrc by defining the |g:bexec_script_types| 
    variable like so: >
 
-    let g:bexec_script_types = ['pike', 'tclsh']
+     let g:bexec_script_types = ['pike', 'tclsh']
+<
 
-   This will add the pike and tclsh interpreter to the list of known 
+   This will add the pike and tclsh interpreter to the list of known
    interpreters. There is no need to give the full path to the interpreters,
    just give the name of the executable. It has to be in your path though.
 
@@ -151,6 +184,7 @@ one of three things:
     let g:bexec_filter_types = {
         \ 'html' : 'links -dump',
         \ }
+<
 
    To make the Links textbrowser your default filter for files of the html
    type. (Note: links doesn't work for executing Visually selected text)
@@ -188,8 +222,8 @@ It will output something like:
   |  2 | Testing   | 
   +----+-----------+
 
-It's not much better than a normal commandline database frontend, but at least
-you get:
+It's not much better than a normal commandline database frontend, but at
+least you get:
 
  * SQL syntax color highlighting
  * Easier editing than most database commandline clients.  
@@ -216,6 +250,12 @@ Output looks like:
 MISC                                                             *bexec-misc*
 
 Changelog
+
+    v0.3
+        
+        - BexecCloseOut() added to close the output window (\bc).
+        - bexec_interpreter setting added.
+        - Small code cleanups.
 
     v0.2
         
