@@ -4,7 +4,7 @@
 " capture its output and put it in a seperate buffer.
 "
 " Last Change:	2007 Feb 06
-" Version:      v0.3
+" Version:      v0.4
 " Maintainer:	Ferry Boender <f DOT boender AT electricmonk DOT nl>
 " License:	    This file is placed in the public domain.
 " Usage:        To use this script:
@@ -41,7 +41,10 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.3 (Feb 6, 2007)
+" Changelog:    v0.4 (Feb 16, 2007)
+"                 * Bugfix in BExecCloseOut(). Thanks to Uwe GeldWaescher.
+"                 * Removed some redundant code.
+"               v0.3 (Feb 6, 2007)
 "                 * BexecCloseOut() added to close the output window (\bc)
 "                 * bexec_interpreter setting added.
 "                 * Small code cleanups.
@@ -68,10 +71,10 @@
 "                 * Parameters to the shebang interpreter are now ignored in
 "                   the executable() check.
 
-"if exists("loaded_bexec")
-"  finish
-"endif
-"let loaded_bexec = 1
+if exists("loaded_bexec")
+  finish
+endif
+let loaded_bexec = 1
 
 "
 " Define some mappings to BExec
@@ -254,15 +257,7 @@ function! <SID>FindOrCreateOutWin(bufName)
     " Find or create a window for the bufName
     if l:outWinNr == -1
         " Create a new window
-        let l:splitCmdMap = {"ver":"vsp", "hor":"vp"}
-        let l:splitCmd = l:splitCmdMap[g:bexec_splitdir]
-        if g:bexec_splitdir == "ver"
-            let l:splitCmd = "vsp"
-        else
-            let l:splitCmd = "sp"
-        endif
-
-        exec l:splitCmd
+        exec {"ver":"vsp", "hor":"sp"}[g:bexec_splitdir]
 
         let l:outWinNr = bufwinnr("%")
         if l:outBufNr != -1
@@ -404,7 +399,7 @@ endfunction
 " Close/Delete the output window/buffer.
 "
 function! BexecCloseOut()
-    silent! exec "bdelete! ".s:bexec_outbufname
+    silent! exec "bwipeout! ".s:bexec_outbufname
 endfunction
 
 "
