@@ -1,6 +1,6 @@
-*bexec.txt*      Buffer execute and grab output      Last Change: 06 Feb 2007
+*bexec.txt*      Buffer execute and grab output      Last Change: 04 Feb 2010
 
-Buffer Execute (v0.3)                                *buffer-execute* *bexec*
+Buffer Execute (v0.5)                                *buffer-execute* *bexec*
 
 The Bexec plugin allows the user to execute the current buffer if it
 contains a script with a shebang (#!/path/to/interpreter) on the first line.
@@ -22,9 +22,10 @@ USAGE                                                           *bexec-usage*
 
 To execute the script in the current buffer, use: >
  \bx   or   :Bexec
+
 To execute the currently highlighted text using the current buffer's
 shebang, use: >
- \bx   or   :BexecVisual
+ \bx   or   :call BexecVisual()
 
 Note: If you've changed your 'mapleader' variable, you'll have to use that 
 instead if '\'. 
@@ -251,6 +252,18 @@ MISC                                                             *bexec-misc*
 
 Changelog
 
+    v0.5
+        - Bugfix in argument handling in Visual mode execution. Range
+          is appended to argument-string, which is wrong. (Mostly
+          affected Zsh users). (thanks to Sven Hergenhahn)
+        - Leader-mappings <leader>bx and <leader>bc are now mapped 
+          regardless of previously existing (custom) mappings to Bexec()
+          functions. (thanks to Sven Hergenhahn)
+
+    v0.4
+        - Bugfix in BExecCloseOut(). Thanks to Uwe GeldWaescher.
+        - Removed some redundant code.
+
     v0.3
         
         - BexecCloseOut() added to close the output window (\bc).
@@ -277,5 +290,6 @@ Credits:
         - Michiel 'Mafkees' van Baak for beta testing.
         - Steven Looman for various suggestions.
         - Uwe GeldWaescher for feedback and suggestions.
+        - Sven Hergenhahnfor for feedback.
         - Bram Moolenaar for, well, you know.
 
