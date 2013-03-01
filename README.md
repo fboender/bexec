@@ -27,9 +27,10 @@ Features
 *   Large number of settings.
 *   Filters (ex.: buffer to HTML)
 
-![Screen shot 1](https://bitbucket.org/fboender/bexec/downloads/bexec_scrsht_1.png)
+### Screenshots
 
-![Screen shot 2](https://bitbucket.org/fboender/bexec/downloads/bexec_scrsht_2.png)
+*   [Screenshot 1](https://bitbucket.org/fboender/bexec/downloads/bexec_scrsht_1.png)
+*   [Screenshot 2](https://bitbucket.org/fboender/bexec/downloads/bexec_scrsht_2.png)
 
 Installation
 ------------
