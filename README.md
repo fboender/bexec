@@ -29,8 +29,7 @@ Features
 
 ### Screenshots
 
-*   [Screenshot 1](https://bitbucket.org/fboender/bexec/downloads/bexec_scrsht_1.png)
-*   [Screenshot 2](https://bitbucket.org/fboender/bexec/downloads/bexec_scrsht_2.png)
+*   [Screenshots](https://bitbucket.org/fboender/bexec/wiki/Screenshots)
 
 Installation
 ------------
