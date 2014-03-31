@@ -143,12 +143,20 @@ let s:script_types = [
     \ 'pike', 'tclsh' ]
 let s:interpreters = { }
 for n in s:script_types
-    let s:interpreters[n] = "/usr/bin/env " . n
+    if has('win32') || has('win64')
+        let s:interpreters[n] = n
+    else
+        let s:interpreters[n] = "/usr/bin/env " . n
+    endif
 endfor
 " Add user's custom interpreters.
 if exists("bexec_script_types")
     for n in g:bexec_script_types
-        let s:interpreters[n] = "/usr/bin/env " . n
+        if has('win32') || has('win64')
+            let s:interpreters[n] = n
+        else
+            let s:interpreters[n] = "/usr/bin/env " . n
+        endif
     endfor
 endif
 
@@ -304,7 +312,7 @@ function! <SID>RunAndRedirectOut(interpreter, curFile, args, bufName)
     endif
 
     " Build the final (vim) command we're gonna run 
-    let l:runCmd = l:runCmd." ".a:interpreter." '".a:curFile."' ".a:args
+    let l:runCmd = l:runCmd." ".a:interpreter.' "'.a:curFile.'" '.a:args
 
     " Add a separator line to distinguish between different script output
     if g:bexec_outputmode == "append"
