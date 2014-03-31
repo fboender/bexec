@@ -3,8 +3,8 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:  2010 Feb 04
-" Version:      v0.5
+" Last Change:  2014 Mar 31
+" Version:      v0.6
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
 " Usage:        To use this script:
@@ -41,7 +41,9 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.5 (Feb 04, 2010)
+" Changelog:    v0.6 (Mar 31, 2014)
+"                 * Support for Windows (by mohd-akram).
+"               v0.5 (Feb 04, 2010)
 "                 * Bugfix in argument handling in Visual mode execution. Range
 "                   is appended to argument-string, which is wrong. (Mostly
 "                   affected Zsh users). (thanks to Sven Hergenhahn)

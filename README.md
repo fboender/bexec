@@ -35,7 +35,7 @@ Installation
 ------------
 
 Bexec is distributed as a Vimball. To install it, just edit the
-bexec-vX.Y.vba script in Vim and run the following command:
+bexec-vX.Y.vbm script in Vim and run the following command:
 
     :so %
 
