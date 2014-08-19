@@ -91,6 +91,7 @@ let loaded_bexec = 1
 nmap <silent> <unique> <Leader>bx :call Bexec()<CR>
 vmap <silent> <unique> <Leader>bx :call BexecVisual()<CR>
 nmap <silent> <unique> <Leader>bc :call BexecCloseOut()<CR>
+nmap <silent> <unique> <Leader>bl :call BexecLive()<CR>
 
 "
 " Let's do some settings too.
@@ -101,7 +102,7 @@ if !exists("bexec_args")
 endif
 if !exists("bexec_splitdir")
     " Direction in which to split the current window for the output buffer.
-    let bexec_splitdir = "hor" " hor|ver
+    let bexec_splitdir = "ver" " hor|ver
 endif
 if !exists("bexec_argsbuf")
     " Buffer number to be used as argument string to feed to script when
@@ -130,6 +131,7 @@ endif
 "
 com! -nargs=* Bexec         call Bexec(<f-args>)
 com! -nargs=* BexecVisual   call BexecVisual(<f-args>)
+com! -nargs=* BexecLive     call BexecLive(<f-args>)
 com!          BexecCloseOut call BexecCloseOut()
 
 "
@@ -429,4 +431,26 @@ endfunction
 "
 function! Bexec(...) 
     call <SID>BexecDo([])
+endfunction
+
+"
+" Realtime updates to the bexec buffer.
+"
+function! BexecLive(...)
+  if g:auto_save >= 1
+    let g:auto_save = 0
+    echo "AutoSave OFF"
+  else
+    call <SID>BexecDo([])
+    let g:auto_save = 1
+    au CursorHold,CursorHoldI,InsertLeave * call AutoSave()
+    echo "AutoSave ON"
+  endif
+endfunction
+
+function! AutoSave()
+  if g:auto_save >= 1
+    silent! wa
+    :Bexec
+  endif
 endfunction
