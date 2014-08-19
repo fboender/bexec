@@ -27,6 +27,9 @@ To execute the currently highlighted text using the current buffer's
 shebang, use: >
  \bx   or   :call BexecVisual()
 
+To toggle automatic live updates, use: >
+ \bl   or   :call BexecLive()
+
 Note: If you've changed your 'mapleader' variable, you'll have to use that 
 instead if '\'. 
 

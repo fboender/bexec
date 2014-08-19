@@ -3,8 +3,8 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:  2014 Mar 31
-" Version:      v0.6
+" Last Change:  2014 Aug 19
+" Version:      v0.7
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
 " Usage:        To use this script:
@@ -20,6 +20,10 @@
 "               Run :call BexecVisual()  (in visual select mode)
 "                OR
 "               Type <leader>bx (usually \bx) in visual mode.
+"                OR
+"               Run :call BexecLive() for live updates.
+"                OR
+"               Type <leader>bl (usually \bl) for live updates.
 "
 "               For more usage, see bexec.txt.
 "
@@ -41,7 +45,9 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.6 (Mar 31, 2014)
+" Changelog:    v0.7 (Aug 19, 2014)
+"                 * Support for automatic live updating of the bexec buffer.
+"               v0.6 (Mar 31, 2014)
 "                 * Support for Windows (by mohd-akram).
 "               v0.5 (Feb 04, 2010)
 "                 * Bugfix in argument handling in Visual mode execution. Range
@@ -91,6 +97,7 @@ let loaded_bexec = 1
 nmap <silent> <unique> <Leader>bx :call Bexec()<CR>
 vmap <silent> <unique> <Leader>bx :call BexecVisual()<CR>
 nmap <silent> <unique> <Leader>bc :call BexecCloseOut()<CR>
+nmap <silent> <unique> <Leader>bl :call BexecLive()<CR>
 
 "
 " Let's do some settings too.
@@ -124,12 +131,21 @@ if !exists("bexec_interpreter")
     " Overwrite all interpreter detect and use this one
     let bexec_interpreter = ""
 endif
+if !exists("g:bexec_auto_save")
+    " Autosaving toggle flag.
+    let g:bexec_auto_save = 0
+endif
+if !exists("g:bexec_auto_save_no_updatetime")
+    " Update frequency.
+    set updatetime=200
+endif
 
 "
 " Make the BExec call known to Vim
 "
 com! -nargs=* Bexec         call Bexec(<f-args>)
 com! -nargs=* BexecVisual   call BexecVisual(<f-args>)
+com! -nargs=* BexecLive     call BexecLive(<f-args>)
 com!          BexecCloseOut call BexecCloseOut()
 
 "
@@ -429,4 +445,20 @@ endfunction
 "
 function! Bexec(...) 
     call <SID>BexecDo([])
+endfunction
+
+"
+" Realtime updates to the bexec buffer.
+"
+function! BexecLive(...)
+    let g:bexec_auto_save = 1
+    call <SID>BexecDo([])
+    au CursorHold,CursorHoldI,InsertLeave * call AutoSave()
+endfunction
+
+function! AutoSave()
+  if g:bexec_auto_save >= 1
+    silent! wa
+    :Bexec
+  endif
 endfunction
