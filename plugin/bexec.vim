@@ -4,7 +4,7 @@
 " capture its output and put it in a seperate buffer.
 "
 " Last Change:  2014 Aug 19
-" Version:      v0.6
+" Version:      v0.7
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
 " Usage:        To use this script:
@@ -45,7 +45,9 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.6 (Mar 31, 2014)
+" Changelog:    v0.7 (Aug 19, 2014)
+"                 * Support for automatic live updating of the bexec buffer.
+"               v0.6 (Mar 31, 2014)
 "                 * Support for Windows (by mohd-akram).
 "               v0.5 (Feb 04, 2010)
 "                 * Bugfix in argument handling in Visual mode execution. Range
@@ -128,6 +130,14 @@ endif
 if !exists("bexec_interpreter")
     " Overwrite all interpreter detect and use this one
     let bexec_interpreter = ""
+endif
+if !exists("g:bexec_auto_save")
+    " Autosaving toggle flag.
+    let g:bexec_auto_save = 0
+endif
+if !exists("g:bexec_auto_save_no_updatetime")
+    " Update frequency.
+    set updatetime=200
 endif
 
 "
@@ -441,19 +451,13 @@ endfunction
 " Realtime updates to the bexec buffer.
 "
 function! BexecLive(...)
-  if g:auto_save >= 1
-    let g:auto_save = 0
-    echo "AutoSave OFF"
-  else
+    let g:bexec_auto_save = 1
     call <SID>BexecDo([])
-    let g:auto_save = 1
     au CursorHold,CursorHoldI,InsertLeave * call AutoSave()
-    echo "AutoSave ON"
-  endif
 endfunction
 
 function! AutoSave()
-  if g:auto_save >= 1
+  if g:bexec_auto_save >= 1
     silent! wa
     :Bexec
   endif
