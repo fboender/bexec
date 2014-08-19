@@ -3,7 +3,7 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:  2014 Mar 31
+" Last Change:  2014 Aug 19
 " Version:      v0.6
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
@@ -20,6 +20,10 @@
 "               Run :call BexecVisual()  (in visual select mode)
 "                OR
 "               Type <leader>bx (usually \bx) in visual mode.
+"                OR
+"               Run :call BexecLive() for live updates.
+"                OR
+"               Type <leader>bl (usually \bl) for live updates.
 "
 "               For more usage, see bexec.txt.
 "
@@ -102,7 +106,7 @@ if !exists("bexec_args")
 endif
 if !exists("bexec_splitdir")
     " Direction in which to split the current window for the output buffer.
-    let bexec_splitdir = "ver" " hor|ver
+    let bexec_splitdir = "hor" " hor|ver
 endif
 if !exists("bexec_argsbuf")
     " Buffer number to be used as argument string to feed to script when

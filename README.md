@@ -26,6 +26,7 @@ Features
 *   Show script output in newly split buffer.
 *   Large number of settings.
 *   Filters (ex.: buffer to HTML)
+*   [Realtime buffer updates.](http://f.cl.ly/items/331H3h1m1V2e1s2t3R3a/bexec_live.gif)
 
 ### Screenshots
 
