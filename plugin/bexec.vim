@@ -3,8 +3,8 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:  2014 Aug 19
-" Version:      v0.7
+" Last Change:  2014 Oct 19
+" Version:      v0.8
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
 " Usage:        To use this script:
@@ -45,10 +45,11 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.8
+" Changelog:    v0.8 (Oct 19, 2014)
 "                 * Honor splitbelow vim setting (by Christopher Pease).
 "               v0.7 (Aug 19, 2014)
-"                 * Support for automatic live updating of the bexec buffer.
+"                 * Support for automatic live updating of the bexec buffer (by
+"                   Jcslassi).
 "               v0.6 (Mar 31, 2014)
 "                 * Support for Windows (by mohd-akram).
 "               v0.5 (Feb 04, 2010)
