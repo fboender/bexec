@@ -104,7 +104,9 @@ window, you can modify the bexec_splitdir setting: >
   :let bexec_splitdir=[direction]
 
 [direction] can be "hor" for horizontal or "ver" for vertical splitting.
-The default is horizontal splitting.
+The default is horizontal splitting. If you prefer your split window to appear
+on the right or below (instead of the left or above), you can use Vim's :set
+splitbelow and :set splitright settings.
 
                                                          *g:bexec_outputmode*
 To control what Bexec does with the output of a script: >

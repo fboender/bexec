@@ -45,7 +45,9 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.7 (Aug 19, 2014)
+" Changelog:    v0.8
+"                 * Honor splitbelow vim setting (by Christopher Pease).
+"               v0.7 (Aug 19, 2014)
 "                 * Support for automatic live updating of the bexec buffer.
 "               v0.6 (Mar 31, 2014)
 "                 * Support for Windows (by mohd-akram).
@@ -286,7 +288,7 @@ function! <SID>FindOrCreateOutWin(bufName)
         " Create a new window
         exec {"ver":"vsp", "hor":"sp"}[g:bexec_splitdir]
 
-        let l:outWinNr = bufwinnr("%")
+        let l:outWinNr = winnr()
         if l:outBufNr != -1
             " The buffer already exists. Open it here.
             exec 'b'.l:outBufNr
