@@ -30,12 +30,15 @@ Features
 
 ### Screenshots
 
-*   [Screenshots](https://bitbucket.org/fboender/bexec/wiki/Screenshots)
+![](https://raw.githubusercontent.com/fboender/bexec/master/contrib/bexec_scrsht_1.png)
+![](https://raw.githubusercontent.com/fboender/bexec/master/contrib/bexec_scrsht_1.png)
+
 
 Installation
 ------------
 
-Bexec is distributed as a Vimball. To install it, just edit the
+Bexec is distributed as a Vimball. To install it, download the Vimbaal from the
+[Releases page](https://github.com/fboender/bexec/releases) page.  Edit the
 bexec-vX.Y.vbm script in Vim and run the following command:
 
     :so %
@@ -43,7 +46,6 @@ bexec-vX.Y.vbm script in Vim and run the following command:
 You can now pull up the Bexec help using >
         
     :help bexec
-
 
 
 License
