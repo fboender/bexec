@@ -1,6 +1,47 @@
 " Autoload functions for the bexec plugin.
 
 "
+" Let's do some settings efirst.
+"
+if !exists("bexec_args")
+    " Argument string to feed to script when executing
+    let bexec_args = ""
+endif
+if !exists("bexec_splitdir")
+    " Direction in which to split the current window for the output buffer.
+    let bexec_splitdir = "hor" " hor|ver
+endif
+if !exists("bexec_argsbuf")
+    " Buffer number to be used as argument string to feed to script when
+    " executing. Only first line is used. FIXME: more lines?
+    let bexec_argsbuf = ""
+endif
+if !exists("bexec_outputmode")
+    " Replace or append output of script in output buffer?
+    let bexec_outputmode = "replace" " replace|append
+endif
+if !exists("bexec_rehighlight")
+    " Re-highlight selected text after executing BexecVisual?
+    let bexec_rehighlight = 0
+endif
+if !exists("bexec_outputscroll")
+    " Scroll output buffer after appending output of script?
+    let bexec_outputscroll = 1
+endif
+if !exists("bexec_interpreter")
+    " Overwrite all interpreter detect and use this one
+    let bexec_interpreter = ""
+endif
+if !exists("g:bexec_auto_save")
+    " Autosaving toggle flag.
+    let g:bexec_auto_save = 0
+endif
+if !exists("g:bexec_auto_save_no_updatetime")
+    " Update frequency.
+    set updatetime=200
+endif
+
+"
 " Constants
 "
 let s:bexec_outbufname = "-BExec_output-"
