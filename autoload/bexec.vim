@@ -1,6 +1,52 @@
 " Autoload functions for the bexec plugin.
 
 "
+" Constants
+"
+let s:bexec_outbufname = "-BExec_output-"
+
+"
+" List of interpreters/common scripting language BExec knows about.
+"
+let s:script_types = [
+    \ 'php', 'python', 'sh', 'perl', 'ruby', 'm4',
+    \ 'pike', 'tclsh' ]
+let s:interpreters = { }
+for n in s:script_types
+    if has('win32') || has('win64')
+        let s:interpreters[n] = n
+    else
+        let s:interpreters[n] = "/usr/bin/env " . n
+    endif
+endfor
+" Add user's custom interpreters.
+if exists("bexec_script_types")
+    for n in g:bexec_script_types
+        if has('win32') || has('win64')
+            let s:interpreters[n] = n
+        else
+            let s:interpreters[n] = "/usr/bin/env " . n
+        endif
+    endfor
+endif
+
+" Custom 'filters',
+" e.g. you can run html pages through lynx, sql files through MySQL, etc.
+let s:filter_types = {
+            \ 'html' : 'lynx --dump',
+            \ 'sql'  : 'mysql -u root <',
+            \ }
+for k in keys(s:filter_types)
+    let s:interpreters[k] = s:filter_types[k]
+endfor
+" Overwrite user's custom filters.
+if exists("bexec_filter_types")
+    for k in keys(g:bexec_filter_types)
+        let s:interpreters[k] = bexec_filter_types[k]
+    endfor
+endif
+
+"
 " Get the first line of the current buffer and check if it's a shebang line
 " (shebang is an indication of which interpreter should be used to run a
 " script. The shebang should be on the first line and should be in the form of
