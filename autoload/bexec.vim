@@ -231,14 +231,14 @@ endfunction
 "
 " Close/Delete the output window/buffer.
 "
-function! BexecCloseOut()
+function! bexec#CloseOut()
     silent! exec "bwipeout! ".s:bexec_outbufname
 endfunction
 
 "
 " Wrapper function for visually selected text execution.
 "
-function! BexecVisual(...) range
+function! bexec#Visual(...) range
     call <SID>BexecDo([a:firstline, a:lastline])
     if g:bexec_rehighlight == 1
         " Rehighlight selection
@@ -249,20 +249,20 @@ endfunction
 "
 " Wrapper function for normal buffer execution.
 "
-function! Bexec(...)
+function! bexec#Normal(...)
     call <SID>BexecDo([])
 endfunction
 
 "
 " Realtime updates to the bexec buffer.
 "
-function! BexecLive(...)
+function! bexec#Live(...)
     let g:bexec_auto_save = 1
     call <SID>BexecDo([])
-    au CursorHold,CursorHoldI,InsertLeave * call AutoSave()
+    au CursorHold,CursorHoldI,InsertLeave * call bexec#AutoSave()
 endfunction
 
-function! AutoSave()
+function! bexec#AutoSave()
   if g:bexec_auto_save >= 1
     silent! wa
     :Bexec

@@ -97,10 +97,10 @@ let loaded_bexec = 1
 "
 " Define some mappings to BExec
 "
-nmap <silent> <unique> <Leader>bx :call Bexec()<CR>
-vmap <silent> <unique> <Leader>bx :call BexecVisual()<CR>
-nmap <silent> <unique> <Leader>bc :call BexecCloseOut()<CR>
-nmap <silent> <unique> <Leader>bl :call BexecLive()<CR>
+nmap <silent> <unique> <Leader>bx :call bexec#Normal()<CR>
+vmap <silent> <unique> <Leader>bx :call bexec#Visual()<CR>
+nmap <silent> <unique> <Leader>bc :call bexec#Live()<CR>
+nmap <silent> <unique> <Leader>bl :call bexec#CloseOut()<CR>
 
 "
 " Let's do some settings too.
@@ -146,10 +146,10 @@ endif
 "
 " Make the BExec call known to Vim
 "
-com! -nargs=* Bexec         call Bexec(<f-args>)
-com! -nargs=* BexecVisual   call BexecVisual(<f-args>)
-com! -nargs=* BexecLive     call BexecLive(<f-args>)
-com!          BexecCloseOut call BexecCloseOut()
+com! -nargs=* Bexec         call bexec#Normal(<f-args>)
+com! -nargs=* BexecVisual   call bexec#Visual(<f-args>)
+com! -nargs=* BexecLive     call bexec#Live(<f-args>)
+com!          BexecCloseOut call bexec#CloseOut()
 
 "
 " Constants
