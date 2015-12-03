@@ -3,15 +3,15 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:  2014 Oct 19
-" Version:      v0.8
+" Last Change:  2015 Dec 3
+" Version:      v0.9
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
-" Usage:        To use this script:
+" Usage:        To use this plugin:
 "
-"               - Place in your .vim/plugin/ dir.
-"                OR
-"               - Source it (:source bexec.vim)
+"               - Place this file in your .vim/plugin/ dir and
+"               - place the autoload file in your .vim/autoload dir.
+"               - Then restart Vim
 "
 "               Run :Bexec
 "                OR
@@ -45,7 +45,10 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.8 (Oct 19, 2014)
+" Changelog:    v0.9 (Dec 03, 2015)
+"                 * Move a lot of code to the autoload directory for faster
+"                   startup.
+"               v0.8 (Oct 19, 2014)
 "                 * Honor splitbelow vim setting (by Christopher Pease).
 "               v0.7 (Aug 19, 2014)
 "                 * Support for automatic live updating of the bexec buffer (by
