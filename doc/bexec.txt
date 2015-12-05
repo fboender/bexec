@@ -25,10 +25,10 @@ To execute the script in the current buffer, use: >
 
 To execute the currently highlighted text using the current buffer's
 shebang, use: >
- \bx   or   :call BexecVisual()
+ \bx   or   :BexecVisual()
 
 To toggle automatic live updates, use: >
- \bl   or   :call BexecLive()
+ \bl   or   :BexecLive()
 
 Note: If you've changed your 'mapleader' variable, you'll have to use that
 instead if '\'.
@@ -53,8 +53,8 @@ and set it to display the output buffer.
 If you want to map the :Bexec calls to another key, let's say <F5>, put
 something like this in your ~/.vimrc: >
 
-    nmap <silent> <unique> <F5> :call Bexec()<CR>
-    vmap <silent> <unique> <F5> :call BexecVisual()<CR>
+    nmap <silent> <unique> <F5> :Bexec()<CR>
+    vmap <silent> <unique> <F5> :BexecVisual()<CR>
 
 =============================================================================
 INSTALLATION                                                  *bexec-install*
