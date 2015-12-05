@@ -48,6 +48,25 @@ You can now pull up the Bexec help using >
     :help bexec
 
 
+Usage
+-----
+
+To execute the current buffer:
+
+    \bx
+
+Or execute:
+
+    :Bexec
+
+You can map execution of Bexec to a key for convenient execution. In your .vimrc, put:
+
+    nmap <silent> <unique> <F5> :Bexec()<CR>
+    vmap <silent> <unique> <F5> :BexecVisual()<CR>
+
+Now you can simply press `<F5>` to execute the current buffer.
+
+
 License
 -------
 
