@@ -108,6 +108,13 @@ The default is horizontal splitting. If you prefer your split window to appear
 on the right or below (instead of the left or above), you can use Vim's :set
 splitbelow and :set splitright settings.
 
+                                                           *g:bexec_splitsize*
+The split size is a number that determines how big to make the output window
+size. The default is empty, meaning half the window, depending on other
+settnigs: >
+
+  :let bexec_splitsize=[nr]
+
                                                          *g:bexec_outputmode*
 To control what Bexec does with the output of a script: >
 

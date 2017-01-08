@@ -11,6 +11,10 @@ if !exists("bexec_splitdir")
     " Direction in which to split the current window for the output buffer.
     let bexec_splitdir = "hor" " hor|ver
 endif
+if !exists("bexec_splitsize")
+    " Size of the split. Default is empty, which means half.
+    let bexec_splitsize = ""
+endif
 if !exists("bexec_argsbuf")
     " Buffer number to be used as argument string to feed to script when
     " executing. Only first line is used. FIXME: more lines?
@@ -173,11 +177,12 @@ function! <SID>FindOrCreateOutWin(bufName)
 
     let l:outWinNr = bufwinnr(a:bufName)
     let l:outBufNr = bufnr(a:bufName)
+    let l:splitCmd = g:bexec_splitsize . {"ver":"vsp", "hor":"sp"}[g:bexec_splitdir]
 
     " Find or create a window for the bufName
     if l:outWinNr == -1
         " Create a new window
-        exec {"ver":"vsp", "hor":"sp"}[g:bexec_splitdir]
+        exec l:splitCmd
 
         let l:outWinNr = winnr()
         if l:outBufNr != -1
