@@ -21,12 +21,12 @@ window and set it to display the output buffer.
 Features
 --------
 
-*   Understands: Shebang (#!), filetypes, default script interpreter recognition (PHP, PERL, Python), custom interpreters.
-*   Execute entire script/buffer or only visually selected text.
-*   Show script output in newly split buffer.
-*   Large number of settings.
-*   Filters (ex.: buffer to HTML)
-*   [Realtime buffer updates.](http://f.cl.ly/items/331H3h1m1V2e1s2t3R3a/bexec_live.gif)
+* Understands: Shebang (#!), filetypes, default script interpreter recognition (PHP, PERL, Python), custom interpreters.
+* Execute entire script/buffer or only visually selected text.
+* Show script output in newly split buffer.
+* Large number of settings.
+* Filters (ex.: buffer to HTML)
+* [Realtime buffer updates.](http://f.cl.ly/items/331H3h1m1V2e1s2t3R3a/bexec_live.gif)
 
 ### Screenshots
 
@@ -37,8 +37,9 @@ Features
 Installation
 ------------
 
-Bexec is distributed as a Vimball. To install it, download the Vimbaal from the
-[Releases page](https://github.com/fboender/bexec/releases) page.  Edit the
+Bexec is distributed as a Vimball, and is Vundle compatible. To install it,
+download the Vimbaal from the [Releases
+page](https://github.com/fboender/bexec/releases) page.  Edit the
 bexec-vX.Y.vbm script in Vim and run the following command:
 
     :so %
@@ -65,6 +66,9 @@ You can map execution of Bexec to a key for convenient execution. In your .vimrc
     vmap <silent> <unique> <F5> :BexecVisual()<CR>
 
 Now you can simply press `<F5>` to execute the current buffer.
+
+For configuration options, please read the documentation (`:help bexec`) or
+see the [doc/bexec.txt](documentation).
 
 
 License
