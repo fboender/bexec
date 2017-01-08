@@ -1,7 +1,7 @@
 " Autoload functions for the bexec plugin.
 
 "
-" Let's do some settings efirst.
+" Let's do some settings first.
 "
 if !exists("bexec_args")
     " Argument string to feed to script when executing
