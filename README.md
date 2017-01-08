@@ -68,7 +68,7 @@ You can map execution of Bexec to a key for convenient execution. In your .vimrc
 Now you can simply press `<F5>` to execute the current buffer.
 
 For configuration options, please read the documentation (`:help bexec`) or
-see the [doc/bexec.txt](documentation).
+see the [documentation](doc/bexec.txt).
 
 
 License
