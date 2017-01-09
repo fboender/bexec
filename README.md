@@ -38,7 +38,7 @@ Installation
 ------------
 
 Bexec is distributed as a Vimball, and is Vundle compatible. To install it,
-download the Vimbaal from the [Releases
+download the Vimball from the [Releases
 page](https://github.com/fboender/bexec/releases) page.  Edit the
 bexec-vX.Y.vbm script in Vim and run the following command:
 
