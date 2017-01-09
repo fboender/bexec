@@ -3,8 +3,8 @@
 " Use the shebang (#!) or filetype to execute a script in the current buffer,
 " capture its output and put it in a seperate buffer.
 "
-" Last Change:  2015 Dec 3
-" Version:      v0.9
+" Last Change:  2017 Jan 8
+" Version:      v0.10
 " Maintainer:   Ferry Boender <ferry DOT boender AT electricmonk DOT nl>
 " License:      This file is placed in the public domain.
 " Usage:        To use this plugin:
@@ -45,7 +45,9 @@
 "               * Horizontal column pos gets lost when running in visual
 "                 select mode.
 "               * Fix FIXME's.
-" Changelog:    v0.9 (Dec 03, 2015)
+" Changelog:    v0.10 (Jan 08, 2017)
+"                 * Add bexec_splitsize setting.
+"               v0.9 (Dec 03, 2015)
 "                 * Move a lot of code to the autoload directory for faster
 "                   startup.
 "               v0.8 (Oct 19, 2014)

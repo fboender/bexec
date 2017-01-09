@@ -1,6 +1,6 @@
-*bexec.txt*      Buffer execute and grab output      Last Change: 03 Dec 2015
+*bexec.txt*      Buffer execute and grab output      Last Change: 08 Jan 2017
 
-Buffer Execute (v0.9)                                *buffer-execute* *bexec*
+Buffer Execute (v0.10)                                *buffer-execute* *bexec*
 
 The Bexec plugin allows the user to execute the current buffer if it
 contains a script with a shebang (#!/path/to/interpreter) on the first line.
