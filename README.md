@@ -31,7 +31,7 @@ Features
 ### Screenshots
 
 ![](https://raw.githubusercontent.com/fboender/bexec/master/contrib/bexec_scrsht_1.png)
-![](https://raw.githubusercontent.com/fboender/bexec/master/contrib/bexec_scrsht_1.png)
+![](https://raw.githubusercontent.com/fboender/bexec/master/contrib/bexec_scrsht_2.png)
 
 
 Installation
