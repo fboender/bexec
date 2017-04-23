@@ -1,6 +1,6 @@
-*bexec.txt*      Buffer execute and grab output      Last Change: 08 Jan 2017
+*bexec.txt*      Buffer execute and grab output       Last Change: 23 Apr 2017
 
-Buffer Execute (v0.10)                                *buffer-execute* *bexec*
+Buffer Execute (v0.11)                                *buffer-execute* *bexec*
 
 The Bexec plugin allows the user to execute the current buffer if it
 contains a script with a shebang (#!/path/to/interpreter) on the first line.
@@ -264,9 +264,15 @@ MISC                                                             *bexec-misc*
 
 Changelog
 
+    v0.11
+        - Support stopping of live updating.
+
+    v0.10
+        - Add bexec_splitsize setting.
+
     v0.9
         - Move a lot of code to the autoload directory for faster startup (by
-	  Lucas Hoffmann).
+          Lucas Hoffmann).
 
     v0.8
         - Honor splitbelow vim setting (by Christopher Pease).

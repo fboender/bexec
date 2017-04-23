@@ -67,6 +67,16 @@ You can map execution of Bexec to a key for convenient execution. In your .vimrc
 
 Now you can simply press `<F5>` to execute the current buffer.
 
+To start live updating:
+
+    \bc
+
+or
+
+    :BexecLive
+
+To stop live updating, call `BexecLive` again.
+
 For configuration options, please read the documentation (`:help bexec`) or
 see the [documentation](doc/bexec.txt).
 

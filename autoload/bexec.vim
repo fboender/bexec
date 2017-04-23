@@ -349,9 +349,16 @@ endfunction
 " Realtime updates to the bexec buffer.
 "
 function! bexec#Live(...)
-    let g:bexec_auto_save = 1
-    call <SID>BexecDo([])
-    au CursorHold,CursorHoldI,InsertLeave * call bexec#AutoSave()
+    if g:bexec_auto_save == 1
+        " Stop auto update
+        let g:bexec_auto_save = 0
+        au! CursorHold,CursorHoldI,InsertLeave * call bexec#AutoSave()
+    else
+        " Start auto update
+        let g:bexec_auto_save = 1
+        call <SID>BexecDo([])
+        au CursorHold,CursorHoldI,InsertLeave * call bexec#AutoSave()
+    endif
 endfunction
 
 function! bexec#AutoSave()
